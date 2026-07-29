@@ -5,7 +5,7 @@
 * **HORA AULA:** 80h
 * **HORA RELÓGIO:** 67h
 
-- **Tecnologias:** PHP, Bootstrap, Framework Slim, MySQL
+- **Tecnologias:** PHP
 
 ### Objetivo:
 Apresentar conceitos e características de aplicações web e distribuídas com
