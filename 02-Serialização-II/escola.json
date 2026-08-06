@@ -1,0 +1,127 @@
+{
+    "escola": "IFPR",
+    "cidade": "Foz do Iguaçu",
+    "ano_letivo": 2026,
+    "alunos": [
+        {
+            "id": 1,
+            "nome": "Vinicius Rambo",
+            "turma": "4 Semestre",
+            "status": "Aprovado",
+            "boletim": [
+                {
+                    "materia": "Matematica",
+                    "nota": 9.5
+                },
+                {
+                    "materia": "Banco de Dados II",
+                    "nota": 10.0
+                },
+                {
+                    "materia": "Logica",
+                    "nota": 9.9
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "nome": "Arthur Severo",
+            "turma": "2 Semestre",
+            "status": "Reprovado",
+            "boletim": [
+                {
+                    "materia": "Matematica",
+                    "nota": 1.5
+                },
+                {
+                    "materia": "Banco de Dados",
+                    "nota": 8.0
+                },
+                {
+                    "materia": "Estatistica",
+                    "nota": 5.9
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "nome": "Breno Justus",
+            "turma": "4 Semestre",
+            "status": "Aprovado",
+            "boletim": [
+                {
+                    "materia": "Matematica",
+                    "nota": 8.5
+                },
+                {
+                    "materia": "Banco de Dados",
+                    "nota": 7.0
+                },
+                {
+                    "materia": "Desenvolvimento Web",
+                    "nota": 10
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "nome": "Itamar Junior",
+            "turma": "1 Semestre",
+            "status": "Reprovado",
+            "boletim": [
+                {
+                    "materia": "Matematica",
+                    "nota": 2.5
+                },
+                {
+                    "materia": "Desenvolvimento Web",
+                    "nota": 4.0
+                },
+                {
+                    "materia": "Logica",
+                    "nota": 6.0
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "nome": "Amanda Julas",
+            "turma": "4 Semestre",
+            "status": "Aprovado",
+            "boletim": [
+                {
+                    "materia": "Desenvolvimento Web IV",
+                    "nota": 8.1
+                },
+                {
+                    "materia": "Banco de Dados II",
+                    "nota": 6.9
+                },
+                {
+                    "materia": "Logica",
+                    "nota": 2.9
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "nome": "Nabucodonosor",
+            "turma": "4 Semestre",
+            "status": "Aprovado",
+            "boletim": [
+                {
+                    "materia": "Matematica",
+                    "nota": 7.5
+                },
+                {
+                    "materia": "Banco de Dados",
+                    "nota": 8.0
+                },
+                {
+                    "materia": "Logica",
+                    "nota": 7.9
+                }
+            ]
+        }
+    ]
+}
