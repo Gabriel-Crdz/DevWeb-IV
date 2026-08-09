@@ -8,10 +8,14 @@ echo "<pre>";
 print_r($json_array);
 echo "<pre>";
 
-echo "<table>";
+echo "<table border=1>";
 echo "<tr>";
-echo "<td>ID</td><td>Nome</td><td>Usuario</td><td>email</td><td>endereço</td>";
+
+echo "<td>ID</td><td>Nome</td><td>Usuario</td><td>email</td>
+<td>endereço</td><td>Telefone</td><td>Website</td><td>Companhia</td>";
+
 echo "</tr>";
+
 foreach($json_array as $dados){
     echo "<tr>";
     echo "<td>" . $dados['id'] . "</td>";
@@ -28,7 +32,10 @@ foreach($json_array as $dados){
 
     echo "<td>" . $dados['phone'] . "</td>";
     echo "<td>" . $dados['website'] . "</td>";
-    
+
+    echo "<td>" . $dados['company']['name'] . " - ";
+    echo $dados['company']['catchPharse'] . " - ";
+    echo $dados['company']['bs'] . "<td>";
     
     echo "</tr>";
 }
