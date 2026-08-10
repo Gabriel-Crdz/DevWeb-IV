@@ -2,10 +2,8 @@
 
 if($_POST){
     $encontrou = false;
-    $string = "https://viacep.com.br/ws/" . $_POST['cepInformado'] . "/json/";
+    $url = "https://viacep.com.br/ws/" . $_POST['cepInformado'] . "/json/";
     
-    $url = $string;
-
     // echo $url ."<br>";
 
     $json = file_get_contents($url);
