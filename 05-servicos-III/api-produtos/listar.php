@@ -6,18 +6,11 @@
     <title>Formulario</title>
 </head>
 <body>
-    <form method="POST">
-        <input type="text" name="nome" placeholder="Nome">
-        <input type="number" step="0.01" name="preco" placeholder="Preço">
-        <input type="number" name="estoque" placeholder="Estoque">
-        <button type="submit">Enviar</button>
-    </form>
-
     <div>
         <?php
         require_once 'src/DTOs/ProdutoResponseDTO';
         echo json_encode(["mensagem" => "Produto cadastrado com sucesso!", 
-        "dados"=>ProdutoResponseDTO::render($produto)]) ?? '';
+        "dados"=>ProdutoResponseDTO::renderList($produtos)]) ?? '';
         ?>
     </div>
 </body>

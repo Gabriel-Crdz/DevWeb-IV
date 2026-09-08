@@ -10,6 +10,7 @@ $controller = new ProdutoController();
 $metodo = $_SERVER['REQUEST_METHOD'];
 if ($metodo === 'GET') {
     $controller->listar();
+    require_once "listar.php";
 }
 else if ($metodo === 'POST') {
     $produto = $controller->criar();

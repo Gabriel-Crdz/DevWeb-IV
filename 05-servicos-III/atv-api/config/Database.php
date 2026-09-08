@@ -22,6 +22,7 @@ class Database {
             }catch (PDOException $e){
                 http_response_code(500);
                 echo json_encode(["erro"=>"Falha de conexao com o banco de dados"]);
+                echo $e->getMessage(); // Para ver o erro do sistema
                 exit;
 
             }

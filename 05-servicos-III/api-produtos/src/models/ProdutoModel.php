@@ -31,6 +31,16 @@ class ProdutoModel{
         return $produto ?: null;
     }
 
+    public function listarTodos():?array{
+        $sql = "select * from produtos ORDER BY nome";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $produtos = $stmt->fetch();
+
+        return $produtos?: null;
+    }
+
 }
 
 ?>

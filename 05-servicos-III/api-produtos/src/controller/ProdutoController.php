@@ -21,11 +21,12 @@ class ProdutoController {
         http_response_code(201);
         return $prodtoCriado;
     }
-    public function listar():void{
+    public function listar():?array{
         $produtos = $this->model->listarTodos();
         http_response_code(200);
-        echo json_encode(ProdutoResponseDTO::renderList($produtos));
+        return $produtos;
     }
+
     public function buscarPorId(int $id):void{
         $produto = $this->model->buscarPorId($id);
         if(!$produto){
