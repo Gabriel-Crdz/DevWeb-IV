@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 $modoEdicao = $id > 0;
 
@@ -9,7 +11,7 @@ $erros = [];
 $mensagem = '';
 
 function chamarApi(string $metodo, string $url, ?array $dados = null): array{
-    $cabecalho = "Accept: application/json\r\n";
+    $cabecalho = "Accept: application/json";
 
     $opcoes = [
         'http' => [
@@ -22,7 +24,7 @@ function chamarApi(string $metodo, string $url, ?array $dados = null): array{
     if ($dados !== null) {
         $json = json_encode($dados, JSON_UNESCAPED_UNICODE);
 
-        $opcoes['http']['header'] .= "Content-Type: application/json";
+        $opcoes['http']['header'] .= "Content-Type: application/json\r\n";
         $opcoes['http']['content'] = $json;
     }
 
@@ -42,7 +44,7 @@ function chamarApi(string $metodo, string $url, ?array $dados = null): array{
     return $resultado;
 }
 
-$baseApi = 'http://' . $_SERVER['HTTP_HOST']. rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\'). '/index.php?api=1';
+$baseApi = 'http://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/index.php?api=1';
 
 if ($modoEdicao && $_SERVER['REQUEST_METHOD'] === 'GET') {
     try {
@@ -55,13 +57,13 @@ if ($modoEdicao && $_SERVER['REQUEST_METHOD'] === 'GET') {
         } else {
             $erros[] = $produto['erro'] ?? 'Produto não encontrado.';
         }
-    } catch (Throwable $e) {
+    } catch (Exception $e) {
         $erros[] = 'Erro ao carregar o produto: ' . $e->getMessage();
     }
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nome = trim($_POST['nome'] ?? '');
+    $nome = trim((string)($_POST['nome'] ?? ''));
     $preco = $_POST['preco'] ?? '';
     $estoque = $_POST['estoque'] ?? '';
 
@@ -83,14 +85,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif (isset($resultado['erro'])) {
             $erros[] = $resultado['erro'];
         } else {
-            $mensagem = $modoEdicao
+            $_SESSION['mensagem'] = $modoEdicao
                 ? 'Produto atualizado com sucesso!'
                 : 'Produto cadastrado com sucesso!';
 
-            header('Location: produtos.php?mensagem=' . urlencode($mensagem));
+            header('Location: produtos.php');
             exit;
         }
-    } catch (Throwable $e) {
+    } catch (Exception $e) {
         $erros[] = 'Erro ao salvar o produto: ' . $e->getMessage();
     }
 }
@@ -112,13 +114,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h3>Erros:</h3>
             <ul>
                 <?php foreach ($erros as $erro): ?>
-                    <li><?= htmlspecialchars($erro, ENT_QUOTES, 'UTF-8') ?></li>
+                    <li><?= $erro?></li>
                 <?php endforeach; ?>
             </ul>
         </div>
     <?php endif; ?>
 
-    <form method="POST" action="">
+    <form method="POST" action="" novalidate>
         <?php if ($modoEdicao): ?>
             <input type="hidden" name="id" value="<?= $id ?>">
         <?php endif; ?>
@@ -126,21 +128,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="nome">Nome:</label>
         <br>
         <input type="text" id="nome" name="nome"
-               value="<?= htmlspecialchars($nome, ENT_QUOTES, 'UTF-8') ?>" required>
+               value="<?= $nome ?>">
         <br><br>
 
         <label for="preco">Preço:</label>
         <br>
         <input type="number" id="preco" name="preco"
-               value="<?= htmlspecialchars((string) $preco, ENT_QUOTES, 'UTF-8') ?>"
-               step="0.01" min="0.01" required>
+               value="<?= $preco ?>"
+               step="0.01" min="0.01">
         <br><br>
 
         <label for="estoque">Estoque:</label>
         <br>
         <input type="number" id="estoque" name="estoque"
-               value="<?= htmlspecialchars((string) $estoque, ENT_QUOTES, 'UTF-8') ?>"
-               min="0" required>
+               value="<?= $estoque ?>"
+               min="0">
         <br><br>
 
         <button type="submit">

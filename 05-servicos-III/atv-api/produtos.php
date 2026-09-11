@@ -1,6 +1,10 @@
 <?php
-$mensagem = $_GET['mensagem'] ?? '';
-$erro = '';
+session_start();
+
+$mensagem = $_SESSION['mensagem'] ?? '';
+$erro = $_SESSION['erro'] ?? '';
+unset($_SESSION['mensagem'], $_SESSION['erro']);
+
 $produtos = [];
 
 try {
@@ -9,7 +13,7 @@ try {
     $opcoes = [
         'http' => [
             'method' => 'GET',
-            'header' => "Accept: application/json\r\n",
+            'header' => "Accept: application/json",
             'ignore_errors' => true
         ]
     ];
@@ -32,7 +36,7 @@ try {
     } else {
         $produtos = $dados;
     }
-} catch (Throwable $e) {
+} catch (Exception $e) {
     $erro = 'Erro ao carregar produtos: ' . $e->getMessage();
 }
 ?>
@@ -49,11 +53,11 @@ try {
     <p><a href="form.php">Cadastrar novo produto</a></p>
 
     <?php if ($mensagem): ?>
-        <p><?= $mensagem?></p>
+        <p><?= $mensagem ?></p>
     <?php endif; ?>
 
     <?php if ($erro): ?>
-        <p><?= $erro?></p>
+        <p><?= $erro ?></p>
     <?php endif; ?>
 
     <?php if (empty($produtos)): ?>
@@ -73,15 +77,15 @@ try {
             <tbody>
                 <?php foreach ($produtos as $produto): ?>
                     <tr>
-                        <td><?= (int) $produto['id'] ?></td>
-                        <td><?= $produto['nome'] ?></td>
+                        <td><?= $produto['id'] ?></td>
+                        <td><?= $produto['nome']?></td>
                         <td>R$ <?= number_format((float) ($produto['preco'] ?? 0), 2, ',', '.') ?></td>
-                        <td><?= $produto['estoque']?></td>
+                        <td><?= $produto['estoque'] ?></td>
                         <td><?= $produto['criado_em'] ?></td>
                         <td>
-                            <a href="form.php?id=<?= (int) $produto['id'] ?>">Editar</a>
+                            <a href="form.php?id=<?= $produto['id'] ?>">Editar</a>
                             |
-                            <a href="excluir.php?id=<?= (int) $produto['id'] ?>">Excluir</a>
+                            <a href="excluir.php?id=<?=  $produto['id'] ?>">Excluir</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

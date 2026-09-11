@@ -1,14 +1,16 @@
 <?php
+session_start();
 
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
 if ($id <= 0) {
-    header('Location: produtos.php?mensagem=' . urlencode('ID do produto inválido.'));
+    $_SESSION['erro'] = 'ID do produto inválido.';
+    header('Location: produtos.php');
     exit;
 }
 
 try {
-    $url = 'http://' . $_SERVER['HTTP_HOST']. rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\'). '/index.php?api=1&id=' . $id;
+    $url = 'http://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/index.php?api=1&id=' . $id;
 
     $opcoes = [
         'http' => [
@@ -19,7 +21,6 @@ try {
     ];
 
     $contexto = stream_context_create($opcoes);
-
     $resposta = file_get_contents($url, false, $contexto);
 
     if ($resposta === false) {
@@ -33,26 +34,16 @@ try {
     }
 
     if (isset($resultado['mensagem'])) {
-        header(
-            'Location: produtos.php?mensagem=' .
-            urlencode($resultado['mensagem'])
-        );
-        exit;
+        $_SESSION['mensagem'] = $resultado['mensagem'];
+    } else {
+        $_SESSION['erro'] = $resultado['erro'] ?? 'Não foi possível excluir o produto.';
     }
 
-    $erro = $resultado['erro'] ?? 'Não foi possível excluir o produto.';
-
-    header(
-        'Location: produtos.php?mensagem=' .
-        urlencode($erro)
-    );
+    header('Location: produtos.php');
     exit;
 
-} catch (Throwable $e) {
-
-    header(
-        'Location: produtos.php?mensagem=' .
-        urlencode('Erro ao excluir o produto: ' . $e->getMessage())
-    );
+} catch (Exception $e) {
+    $_SESSION['erro'] = 'Erro ao excluir o produto: ' . $e->getMessage();
+    header('Location: produtos.php');
     exit;
 }
